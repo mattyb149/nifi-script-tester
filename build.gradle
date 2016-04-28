@@ -14,7 +14,7 @@
  *
  ******************************************************************************/
 plugins {
-    id 'com.jfrog.bintray' version '1.4'
+    id 'com.jfrog.bintray' version '1.6'
     id 'java'
     id 'maven'
     id 'maven-publish'
@@ -94,9 +94,9 @@ bintray {
         userOrg = group
         name = project.name
         desc = project.description
-        websiteUrl = 'https://github.com/mattyb149/nifi-nifi.script-tester'
-        issueTrackerUrl = 'https://github.com/mattyb149/nifi-nifi.script-tester/issues'
-        vcsUrl = 'https://github.com/mattyb149/nifi-nifi.script-tester.git'
+        websiteUrl = 'https://github.com/mattyb149/nifi-script-tester'
+        issueTrackerUrl = 'https://github.com/mattyb149/nifi-script-tester/issues'
+        vcsUrl = 'https://github.com/mattyb149/nifi-script-tester.git'
         licenses = ['Apache-2.0']
         labels = ['apache', 'nifi', 'groovy']
         attributes = ['plat': ['linux', 'osx']]
