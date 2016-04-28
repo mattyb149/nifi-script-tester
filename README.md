@@ -2,26 +2,41 @@
 A project to create a stub/mock environment for testing ExecuteScript processors.
 
 ## Usage
+
 java -cp nifi-script-tester-<version>-all.jar [options] script_file
+
   Where options may include:
+  
     -success            Output information about flow files that were transferred to the success relationship. Defaults to true
+    
     -failure            Output information about flow files that were transferred to the failure relationship. Defaults to false
+    
     -no-success         Do not output information about flow files that were transferred to the success relationship. Defaults to false
+    
     -content            Output flow file contents. Defaults to false
+    
     -attrs              Output flow file attributes. Defaults to false
+    
     -all-rels           Output information about flow files that were transferred to any relationship. Defaults to false
+    
     -all                Output content, attributes, etc. about flow files that were transferred to any relationship. Defaults to false
+    
     -input=<directory>  Send each file in the specified directory as a flow file to the script
+    
+    
     
 ## Build
 
 To build the fat JAR, just run the following command:
+
 ```gradle
 gradle shadowJar
 ```
 
+
 ## Download
 The JAR is available on Bintray at https://bintray.com/mattyb149/maven/nifi-script-tester
+
 
 ### Maven
 ```maven
