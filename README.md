@@ -2,7 +2,7 @@
 A project to create a stub/mock environment for testing ExecuteScript processors.
 
 ## Usage
-java -cp nifi-script-tester-<version>-all.jar [options] <script file>
+java -cp nifi-script-tester-<version>-all.jar [options] script_file
   Where options may include:
     -success            Output information about flow files that were transferred to the success relationship. Defaults to true
     -failure            Output information about flow files that were transferred to the failure relationship. Defaults to false
