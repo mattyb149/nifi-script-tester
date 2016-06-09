@@ -2,6 +2,9 @@
 
 .gradle/
 .idea/
+*.ipr
+*.iws
+*.iml
 build/
 
 # Mobile Tools for Java (J2ME)

@@ -23,6 +23,8 @@ java -cp nifi-script-tester-<version>-all.jar [options] script_file
     
     -input=<directory>  Send each file in the specified directory as a flow file to the script
     
+    -modules=<paths>    Comma-separated list of paths (files or directories) containing script modules/JARs
+    
     
     
 ## Build
@@ -43,7 +45,7 @@ The JAR is available on Bintray at https://bintray.com/mattyb149/maven/nifi-scri
 <dependency>
   <groupId>mattyb149</groupId>
   <artifactId>nifi-script-tester</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
   <type>jar</type>
   <classifier>all</classifier>
 </dependency>
@@ -51,7 +53,7 @@ The JAR is available on Bintray at https://bintray.com/mattyb149/maven/nifi-scri
 
 ### Gradle
 ```gradle
-compile(group: 'mattyb149', name: 'nifi-script-tester', version: '1.0', ext: 'jar', classifier: 'all')
+compile(group: 'mattyb149', name: 'nifi-script-tester', version: '1.1', ext: 'jar', classifier: 'all')
 ```
 
 ## License

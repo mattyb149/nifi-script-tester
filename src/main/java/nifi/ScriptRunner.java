@@ -50,6 +50,7 @@ public class ScriptRunner {
     private static boolean outputFailure = false;
     private static String inputFileDir = "";
     private static String scriptPath = "";
+    private static String modulePaths = "";
     private static int numFiles = 0;
 
     public static void main(String[] args) {
@@ -57,7 +58,7 @@ public class ScriptRunner {
 
         // Expecting a single arg with the filename, will figure out language from file extension
         if (args == null || args.length < 1) {
-            System.err.println("Usage: java -cp nifi-script-tester.jar [options] <script file>");
+            System.err.println("Usage: java -jar nifi-script-tester-<version>-all.jar [options] <script file>");
             System.err.println(" Where options may include:");
             System.err.println("   -success            Output information about flow files that were transferred to the success relationship. Defaults to true");
             System.err.println("   -failure            Output information about flow files that were transferred to the failure relationship. Defaults to false");
@@ -67,6 +68,7 @@ public class ScriptRunner {
             System.err.println("   -all-rels           Output information about flow files that were transferred to any relationship. Defaults to false");
             System.err.println("   -all                Output content, attributes, etc. about flow files that were transferred to any relationship. Defaults to false");
             System.err.println("   -input=<directory>  Send each file in the specified directory as a flow file to the script");
+            System.err.println("   -modules=<paths>    Comma-separated list of paths (files or directories) containing script modules/JARs");
             System.exit(1);
         }
 
@@ -100,6 +102,8 @@ public class ScriptRunner {
                 outputAttributes = true;
             } else if (arg.startsWith("-input=")) {
                 inputFileDir = arg.substring("-input=".length());
+            } else if (arg.startsWith("-modules=")) {
+                modulePaths = arg.substring("-modules=".length());
             } else {
                 scriptPath = arg;
             }
@@ -131,7 +135,7 @@ public class ScriptRunner {
         runner.setValidateExpressionUsage(false);
         runner.setProperty(ExecuteScript.SCRIPT_ENGINE, scriptEngineName);
         runner.setProperty(ExecuteScript.SCRIPT_FILE, scriptPath);
-        runner.setProperty(ExecuteScript.MODULES, "src/test/resources/modules");
+        runner.setProperty(ExecuteScript.MODULES, modulePaths.isEmpty() ? "src/test/resources/modules" : modulePaths);
 
         runner.assertValid();
         try {

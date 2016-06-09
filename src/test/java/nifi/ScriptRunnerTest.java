@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 /**
@@ -72,6 +73,12 @@ public class ScriptRunnerTest {
     public void testOutputAllWithInputDir() throws Exception {
 
         ScriptRunner.main(new String[]{"-all", "-input=src/test/resources/input_files", "src/test/resources/test_read_input.groovy"});
+    }
+
+    @Test
+    public void testReadWrite() throws Exception {
+        System.setIn(new FileInputStream("src/test/resources/input_files/jolt.json"));
+        ScriptRunner.main(new String[]{"-all", "src/test/resources/test_json2json.groovy"});
     }
 
 }
