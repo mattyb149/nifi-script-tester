@@ -135,7 +135,9 @@ public class ScriptRunner {
         runner.setValidateExpressionUsage(false);
         runner.setProperty(ExecuteScript.SCRIPT_ENGINE, scriptEngineName);
         runner.setProperty(ExecuteScript.SCRIPT_FILE, scriptPath);
-        runner.setProperty(ExecuteScript.MODULES, modulePaths.isEmpty() ? "src/test/resources/modules" : modulePaths);
+        if (!modulePaths.isEmpty()) {
+            runner.setProperty(ExecuteScript.MODULES, modulePaths);
+        }
 
         runner.assertValid();
         try {
@@ -216,7 +218,7 @@ public class ScriptRunner {
                 }
                 System.out.println("");
             }
-            System.out.println("Flow Files transferred to " + relationship.getName() + ": " + files.size()+ "\n");
+            System.out.println("Flow Files transferred to " + relationship.getName() + ": " + files.size() + "\n");
         }
     }
 }

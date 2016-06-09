@@ -45,7 +45,7 @@ The JAR is available on Bintray at https://bintray.com/mattyb149/maven/nifi-scri
 <dependency>
   <groupId>mattyb149</groupId>
   <artifactId>nifi-script-tester</artifactId>
-  <version>1.1</version>
+  <version>1.1.1</version>
   <type>jar</type>
   <classifier>all</classifier>
 </dependency>
@@ -53,7 +53,7 @@ The JAR is available on Bintray at https://bintray.com/mattyb149/maven/nifi-scri
 
 ### Gradle
 ```gradle
-compile(group: 'mattyb149', name: 'nifi-script-tester', version: '1.1', ext: 'jar', classifier: 'all')
+compile(group: 'mattyb149', name: 'nifi-script-tester', version: '1.1.1', ext: 'jar', classifier: 'all')
 ```
 
 ## License

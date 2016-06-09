@@ -23,7 +23,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
-version = '1.1'
+version = '1.1.1'
 description = "A project to create a stub/mock environment for testing ExecuteScript processors"
 group = 'mattyb149'
 status = 'RELEASE'
