@@ -23,7 +23,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
-version = '1.1.1'
+version = '1.1.2'
 description = "A project to create a stub/mock environment for testing ExecuteScript processors"
 group = 'mattyb149'
 status = 'RELEASE'
@@ -45,6 +45,7 @@ dependencies {
 
     // script engine(s)
     runtime 'org.codehaus.groovy:groovy-all:2.4.6'
+    runtime 'org.python:jython-standalone:2.7.0'
 }
 
 mainClassName = 'nifi.ScriptRunner'
@@ -114,5 +115,5 @@ bintray {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.13"
+    gradleVersion = "3.5"
 }

@@ -76,9 +76,15 @@ public class ScriptRunnerTest {
     }
 
     @Test
-    public void testReadWrite() throws Exception {
+    public void testReadWriteGroovy() throws Exception {
         System.setIn(new FileInputStream("src/test/resources/input_files/jolt.json"));
         ScriptRunner.main(new String[]{"-all", "src/test/resources/test_json2json.groovy"});
+    }
+
+    @Test
+    public void testReadWriteJython() throws Exception {
+        System.setIn(new FileInputStream("src/test/resources/input_files/jolt.json"));
+        ScriptRunner.main(new String[]{"-all", "src/test/resources/test_json2json.py"});
     }
 
 }

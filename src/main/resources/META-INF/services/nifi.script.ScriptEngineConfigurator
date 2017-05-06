@@ -15,3 +15,4 @@
 
 nifi.script.impl.GroovyScriptEngineConfigurator
 nifi.script.impl.JavascriptScriptEngineConfigurator
+nifi.script.impl.JythonScriptEngineConfigurator
