@@ -16,6 +16,9 @@
  */
 package nifi;
 
+import nifi.script.AccessibleExecuteScript;
+import nifi.script.AccessibleScriptingComponentHelper;
+import nifi.script.ScriptingComponentUtils;
 import org.apache.nifi.processor.Relationship;
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
@@ -36,13 +39,14 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by mburgess on 4/28/16.
+ * The main entry class for testing ExecuteScript
  */
 public class ScriptRunner {
 
     public static String DASHED_LINE = "---------------------------------------------------------";
 
     private static TestRunner runner;
+    private static AccessibleScriptingComponentHelper scriptingComponent;
 
     private static boolean outputAttributes = false;
     private static boolean outputContent = false;
@@ -126,17 +130,18 @@ public class ScriptRunner {
             scriptEngineName = "lua";
         }
 
-        final ExecuteScript executeScript = new ExecuteScript();
+        final ExecuteScript executeScript = new AccessibleExecuteScript();
         // Need to do something to initialize the properties, like retrieve the list of properties
         executeScript.getSupportedPropertyDescriptors();
 
         runner = TestRunners.newTestRunner(executeScript);
+        scriptingComponent = (AccessibleScriptingComponentHelper) executeScript;
 
         runner.setValidateExpressionUsage(false);
-        runner.setProperty(ExecuteScript.SCRIPT_ENGINE, scriptEngineName);
-        runner.setProperty(ExecuteScript.SCRIPT_FILE, scriptPath);
+        runner.setProperty(scriptingComponent.getScriptingComponentHelper().SCRIPT_ENGINE, scriptEngineName);
+        runner.setProperty(ScriptingComponentUtils.SCRIPT_FILE, scriptPath);
         if (!modulePaths.isEmpty()) {
-            runner.setProperty(ExecuteScript.MODULES, modulePaths);
+            runner.setProperty(ScriptingComponentUtils.MODULES, modulePaths);
         }
 
         runner.assertValid();

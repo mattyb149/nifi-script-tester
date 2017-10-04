@@ -15,15 +15,16 @@
  ******************************************************************************/
 plugins {
     id 'application'
-    id 'com.jfrog.bintray' version '1.6'
+    id 'com.jfrog.bintray' version '1.7.3'
     id 'java'
     id 'maven'
     id 'maven-publish'
     id 'signing'
-    id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'com.github.johnrengelman.shadow' version '2.0.0'
 }
 
-version = '1.1.2'
+version = '1.4.0'
+project.ext.NIFI_VERSION='1.4.0'
 description = "A project to create a stub/mock environment for testing ExecuteScript processors"
 group = 'mattyb149'
 status = 'RELEASE'
@@ -36,10 +37,10 @@ repositories {
 
 
 dependencies {
-    compile 'org.apache.nifi:nifi-api:0.6.1'
-    compile 'org.apache.nifi:nifi-mock:0.6.1'
+    compile "org.apache.nifi:nifi-api:${project.ext.NIFI_VERSION}"
+    compile "org.apache.nifi:nifi-mock:${project.ext.NIFI_VERSION}"
+    compile 'commons-io:commons-io:2.5'
     testCompile 'junit:junit:4.12'
-    runtime 'commons-io:commons-io:2.4'
     runtime 'junit:junit:4.12'
     runtime 'org.slf4j:slf4j-log4j12:1.7.14'
 

@@ -28,9 +28,10 @@ public class GroovyScriptEngineConfigurator extends AbstractModuleClassloaderCon
                     + "import org.apache.nifi.processor.exception.*\n"
                     + "import org.apache.nifi.processor.io.*\n"
                     + "import org.apache.nifi.processor.util.*\n"
-                    + "import org.apache.nifi.processors.nifi.script.*\n"
-                    + "import org.apache.nifi.logging.ProcessorLog\n";
-
+                    + "import org.apache.nifi.processors.script.*\n"
+                    + "import org.apache.nifi.logging.ComponentLog\n"
+                    + "import org.apache.nifi.script.*\n"
+                    + "import org.apache.nifi.lookup.*\n";
 
     private ScriptEngine scriptEngine;
 

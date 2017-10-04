@@ -14,29 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nifi.script.impl;
+package nifi.script;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
 
 /**
- * This class offers methods to perform Javascript-specific operations during the script engine lifecycle.
+ * An interface for retrieving the scripting component helper for a scripting processor. Aids in testing (for setting the Script Engine descriptor, for example).
  */
-public class JavascriptScriptEngineConfigurator extends AbstractModuleClassloaderConfigurator {
-
-    @Override
-    public String getScriptEngineName() {
-        return "ECMAScript";
-    }
-
-    @Override
-    public Object init(ScriptEngine engine, String[] modulePaths) throws ScriptException {
-        // No initialization methods needed at present
-        return engine;
-    }
-
-    @Override
-    public Object eval(ScriptEngine engine, String scriptBody, String[] modulePaths) throws ScriptException {
-        return engine.eval(scriptBody);
-    }
+public interface AccessibleScriptingComponentHelper {
+    ScriptingComponentHelper getScriptingComponentHelper();
 }

@@ -20,7 +20,6 @@ import org.apache.nifi.logging.ComponentLog;
 import nifi.script.ScriptEngineConfigurator;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -30,7 +29,7 @@ import java.util.List;
  * This base class provides a common implementation for the getModuleURLsForClasspath method of the
  * ScriptEngineConfigurator interface
  */
-abstract class AbstractModuleClassloaderConfigurator implements ScriptEngineConfigurator {
+public abstract class AbstractModuleClassloaderConfigurator implements ScriptEngineConfigurator {
 
     /**
      * Scans the given module paths for JARs. The path itself (whether a directory or file) will be added to the list
@@ -59,12 +58,7 @@ abstract class AbstractModuleClassloaderConfigurator implements ScriptEngineConf
 
                     // If the path is a directory, we need to scan for JARs and add them to the classpath
                     if (modulePath.isDirectory()) {
-                        File[] jarFiles = modulePath.listFiles(new FilenameFilter() {
-                            @Override
-                            public boolean accept(File dir, String name) {
-                                return (name != null && name.endsWith(".jar"));
-                            }
-                        });
+                        File[] jarFiles = modulePath.listFiles((dir, name) -> (name != null && name.endsWith(".jar")));
 
                         if (jarFiles != null) {
                             // Add each to the classpath
