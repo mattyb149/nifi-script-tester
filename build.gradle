@@ -23,7 +23,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '2.0.0'
 }
 
-version = '1.4.0'
+version = '1.2.0'
 project.ext.NIFI_VERSION='1.4.0'
 description = "A project to create a stub/mock environment for testing ExecuteScript processors"
 group = 'mattyb149'
