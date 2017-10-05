@@ -87,4 +87,10 @@ public class ScriptRunnerTest {
         ScriptRunner.main(new String[]{"-all", "src/test/resources/test_json2json.py"});
     }
 
+    @Test
+    public void testReadInputWithAttributes() throws Exception {
+        ByteArrayInputStream bais = new ByteArrayInputStream("Hello World!".getBytes());
+        System.setIn(bais);
+        ScriptRunner.main(new String[]{"-all", "-attrfile=src/test/resources/attrfiles/incoming_attributes.properties", "src/test/resources/test_attributes_to_propfile.groovy"});
+    }
 }

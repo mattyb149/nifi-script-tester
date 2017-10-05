@@ -37,6 +37,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * The main entry class for testing ExecuteScript
@@ -55,6 +57,7 @@ public class ScriptRunner {
     private static String inputFileDir = "";
     private static String scriptPath = "";
     private static String modulePaths = "";
+    private static String attrFile = "";
     private static int numFiles = 0;
 
     public static void main(String[] args) {
@@ -73,6 +76,7 @@ public class ScriptRunner {
             System.err.println("   -all                Output content, attributes, etc. about flow files that were transferred to any relationship. Defaults to false");
             System.err.println("   -input=<directory>  Send each file in the specified directory as a flow file to the script");
             System.err.println("   -modules=<paths>    Comma-separated list of paths (files or directories) containing script modules/JARs");
+            System.err.println("   -attrfile=<paths>   Path to a properties file specifying attributes to add to incoming flow files.");
             System.exit(1);
         }
 
@@ -83,6 +87,7 @@ public class ScriptRunner {
         outputFailure = false;
         scriptPath = "";
         inputFileDir = "";
+        attrFile = "";
         numFiles = 0;
 
         for (String arg : args) {
@@ -108,6 +113,8 @@ public class ScriptRunner {
                 inputFileDir = arg.substring("-input=".length());
             } else if (arg.startsWith("-modules=")) {
                 modulePaths = arg.substring("-modules=".length());
+            } else if (arg.startsWith("-attrfile=")) {
+                attrFile = arg.substring("-attrfile=".length());
             } else {
                 scriptPath = arg;
             }
@@ -145,6 +152,26 @@ public class ScriptRunner {
         }
 
         runner.assertValid();
+
+        // Get incoming attributes from file (if specified)
+        Map<String, String> incomingAttributes = new HashMap<>();
+        Path attrFilePath = Paths.get(attrFile);
+        if (!attrFile.isEmpty()) {
+            if (!Files.exists(attrFilePath)) {
+                System.err.println("Attribute file does not exist: " + attrFile);
+                System.exit(5);
+            } else {
+                try {
+                    Properties p = new Properties();
+                    p.load(Files.newBufferedReader(attrFilePath));
+                    p.forEach((k, v) -> incomingAttributes.put(k.toString(), v.toString()));
+                } catch (IOException ioe) {
+                    System.err.println("Could not read properties file: " + attrFile + ", reason: " + ioe.getLocalizedMessage());
+                    System.exit(5);
+                }
+            }
+        }
+
         try {
             if (inputFileDir.isEmpty()) {
                 int available = System.in.available();
@@ -152,7 +179,7 @@ public class ScriptRunner {
                     InputStreamReader isr = new InputStreamReader(System.in);
                     char[] input = new char[available];
                     isr.read(input);
-                    runner.enqueue(new String(input));
+                    runner.enqueue(new String(input), incomingAttributes);
                 }
             } else {
                 // Read flow files in from the folder
@@ -169,9 +196,8 @@ public class ScriptRunner {
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                         if (attrs.isRegularFile()) {
-                            runner.enqueue(Files.readAllBytes(file), new HashMap<String, String>() {{
-                                put("filename", file.getFileName().toString());
-                            }});
+                            incomingAttributes.put("filename", file.getFileName().toString());
+                            runner.enqueue(Files.readAllBytes(file), incomingAttributes);
                             numFiles++;
                         }
                         return FileVisitResult.CONTINUE;
